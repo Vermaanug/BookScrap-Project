@@ -1,0 +1,66 @@
+<header>
+  <nav class="nav-bar">
+    <div class="nav-logo">
+      <img src="/image/BookScrap (1).jpg" alt="logo" />
+    </div>
+    <div class="nav-menu">
+      <ul class="nav-item">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Browse">Browse</a></li>
+        <li><a href="/Sell">Sell</a></li>
+        {{#if isAuthenticated}}
+        <li class="user-dropdown" id="user-dropdown">
+          <a href="#"><i class="fas fa-user-alt"></i> {{username}}</a>
+          <ul class="dropdown">
+            <li><a href="#">Profile</a></li>
+            <li id="logout-link"><a href="#">Log out</a></li>
+          </ul>
+        </li>
+        {{else}}
+        <li><a href="/login"><i class="fa-solid fa-user"></i>Login</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script>
+
+  // DropDown menu
+  document.addEventListener("DOMContentLoaded", function () {
+    const userDropdown = document.getElementById("user-dropdown");
+    const dropdown = userDropdown.querySelector(".dropdown");
+    userDropdown.addEventListener("click", function () {
+      dropdown.style.display = "block";
+    });
+    document.addEventListener("click", function (event) {
+      if
+        (!userDropdown.contains(event.target)) { dropdown.style.display = "none"; }
+    });
+  });
+
+
+  // Logout 
+  document.addEventListener("DOMContentLoaded", function () {
+    const logoutLink = document.getElementById("logout-link");
+
+    logoutLink.addEventListener("click", async function (e) {
+      e.preventDefault();
+
+      try {
+        const response = await fetch("/logout", {
+          method: "GET",
+        });
+
+        if (response.ok) {
+          // Redirect to the login page after logout
+          window.location.href = "/login";
+        } else {
+          console.error("Error during logout:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error during logout:", error);
+      }
+    });
+  });
+</script>

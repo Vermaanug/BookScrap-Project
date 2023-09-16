@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@100;200&family=PT+Serif&family=Poppins:wght@100&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-family: 'PT Serif', serif;
+    list-style-type: none;
+}
+
+.Conatiner {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0F0F0;
+}
+
+.Box {
+    border-radius: 1rem;
+    min-width: 30rem ;
+    min-height: 30rem ;
+    background-color: #fff;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.Box h2 {
+    text-align: center;
+    padding: 1rem;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
+.Box-contain {
+    position: relative;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.Box-contain label {
+    position: absolute;
+    left: 55px;
+    top: 6px;
+}
+
+.Box-contain label i {
+    display: inline-block;
+    font-size: inherit;
+}
+
+.Box-contain input {
+    width: 80%;
+    display: block;
+    margin: auto;
+    border: none ;
+    outline: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 30px;
+    box-sizing: border-box;
+}
+
+.Box-contain input:hover{
+    border-bottom: 1px solid #000;
+}
+
+.Contain {
+    position: absolute;
+    left: 60px;
+}
+
+.Contain label {
+    margin-left: 7px;
+
+}
+
+.Contain label span {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.Pass {
+    position: relative;
+    left: 305px;
+}
+
+.Pass a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.Pass a:hover {
+    color: rgb(31, 31, 160);
+    text-decoration: underline;
+}
+
+.Btn {
+    display: inline-block;
+    margin-top: 3rem;
+    margin-left: 9rem ;
+}
+
+.Btn input {
+    border-radius: 2rem;
+    width: 10rem;
+    height: 45px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #6dabe4 ;
+    color: #fff;
+    cursor: pointer;
+}
+
+.Btn input:hover {
+    background-color: #1b6ebb;
+}
+
+#success-message {
+    color: green;
+    font-weight: bold;
+    display: none;
+}
+
+.Signup {
+    position: relative;
+    top: 1rem;
+    left: 9.5rem;
+}
+
+.Signup a {
+    text-decoration: none;
+    color: black;
+}
+
+.Signup a:hover {
+    text-decoration: underline;
+}

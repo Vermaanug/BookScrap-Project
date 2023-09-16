@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sell Page </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/sell.css">
+</head>
+<body>
+    {{>navbar}}
+    <section class="home">
+        <div class="home-container">
+            <h2>Upload Book Information</h2>
+            <form action="#" method="POST" enctype="multipart/form-data">
+                <div class="container">
+                    <figure class="image-container">
+                        <img id="chosen-image">
+                        <figcaption id="file-name"></figcaption>
+                    </figure>
+            
+                    <input type="file" id="upload-button" accept="image/*">
+                    <label for="upload-button">
+                        <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="book-name">Book Name </label>
+                    <input type="text" id="book-name" name="book-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="standard">Standard</label>
+                    <input type="text" id="standard" name="standard" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" id="pincode" name="pincode" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group btn">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    {{>footer}}
+    {{!-- <script src="./upload.js"></script> --}}
+</body>
+
+</html>
