@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/sell.css">
 </head>
+
 <body>
     {{>navbar}}
     <section class="home">
@@ -20,7 +22,7 @@
                         <img id="chosen-image">
                         <figcaption id="file-name"></figcaption>
                     </figure>
-            
+
                     <input type="file" id="upload-button" accept="image/*">
                     <label for="upload-button">
                         <i class="fas fa-upload"></i> &nbsp; Choose A Photo
@@ -37,9 +39,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="number">Phone No</label>
+                    <input type="tel" id="number" name="number" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
                     <label for="location">Location</label>
                     <input type="text" id="location" name="location" required>
                 </div>
+
 
                 <div class="form-group">
                     <label for="pincode">Pincode</label>
@@ -54,7 +62,6 @@
         </div>
     </section>
     {{>footer}}
-    {{!-- <script src="./upload.js"></script> --}}
 </body>
 
 </html>
