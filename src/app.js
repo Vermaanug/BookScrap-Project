@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const User = require("./models/Signup");
 const crypto = require('crypto');
 const session = require('express-session');
+const multer = require('multer');
+const Book = require('./models/Book');
 
 const secretKey = crypto.randomBytes(32).toString('hex');
 
@@ -123,6 +125,42 @@ app.get("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
+
+// Storage and FileName Setting
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'public/uploads'); // Destination folder for uploaded images
+  },
+  filename: (req, file, cb) => {
+      cb(null , file.originalname);
+  },
+});
+
+const upload = multer({ storage : storage });
+
+// Handle POST request to save data to the database
+app.post('/submit-form', upload.single('imagePath'), async (req, res) => {
+
+  try {
+      // Create a new book object
+      const newBookEntry = new Book({
+          bookname : req.body.bookname ,
+          standard : req.body.standard ,
+          number : req.body.number ,
+          location : req.body.location ,
+          pincode : req.body.pincode ,
+          imagePath: req.file ? req.file.filename : '',
+      });
+
+      // Save the book data to the database
+      await newBookEntry.save();
+      res.status(201).json({ message: 'Book entry created successfully' });
+  } catch (error) {
+      console.error('Error creating book entry:', error);
+      res.status(500).json({ message: 'An error occurred while creating the book entry' });
+  }
+});
+
 
 
 app.listen(port, () => {
