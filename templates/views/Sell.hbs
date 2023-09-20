@@ -16,21 +16,21 @@
     <section class="home">
         <div class="home-container">
             <h2>Upload Book Information</h2>
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form action="/submit-form" method="POST" enctype="multipart/form-data">
                 <div class="container">
                     <figure class="image-container">
                         <img id="chosen-image">
                         <figcaption id="file-name"></figcaption>
                     </figure>
 
-                    <input type="file" id="upload-button" accept="image/*">
+                    <input type="file" id="upload-button" name="imagePath" accept="image/*">
                     <label for="upload-button">
                         <i class="fas fa-upload"></i> &nbsp; Choose A Photo
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="book-name">Book Name </label>
-                    <input type="text" id="book-name" name="book-name" required>
+                    <label for="bookname">Book Name </label>
+                    <input type="text" id="bookname" name="bookname" required>
                 </div>
 
                 <div class="form-group">
