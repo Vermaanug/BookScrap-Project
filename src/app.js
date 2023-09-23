@@ -53,13 +53,6 @@ app.get('/', (req, res) => {
 });
 
 
-app.get("/Browse", (req, res) => {
-  res.render("Browse", {
-    isAuthenticated: req.session.isAuthenticated || false,
-    username: req.session.username || '',
-  });
-});
-
 app.get("/Sell", (req, res) => {
   res.render("Sell", {
     isAuthenticated: req.session.isAuthenticated || false,
@@ -142,6 +135,7 @@ const upload = multer({ storage : storage });
 app.post('/submit-form', upload.single('imagePath'), async (req, res) => {
 
   try {
+
       // Create a new book object
       const newBookEntry = new Book({
           bookname : req.body.bookname ,
@@ -161,6 +155,24 @@ app.post('/submit-form', upload.single('imagePath'), async (req, res) => {
   }
 });
 
+// Create a route to fetch data from the database
+app.get('/Browse', async (req, res) => {
+  try {
+    // Fetch data from the Book collection
+    const books = await Book.find(); 
+
+    const data = {
+      books,
+      isAuthenticated: req.session.isAuthenticated || false,
+      username: req.session.username || '',
+    };
+
+    res.render('browse', data); 
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ message: 'An error occurred while fetching data' });
+  }
+});
 
 
 app.listen(port, () => {
