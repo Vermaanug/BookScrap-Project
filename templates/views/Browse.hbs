@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,92 +10,28 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/Browse.css">
 </head>
+
 <body>
-    {{>navbar}}
+    {{> navbar}}
+
     <main>
         <div class="main-container">
             <div class="container">
+                {{#each books}}
                 <div class="card">
                     <div class="image">
-                        <a href="#"><img src="./image/10th Science.webp"></a>
+                        <a href="#"><img src="/uploads/{{imagePath}}" alt="{{bookname}}"></a>
                     </div>
                     <div class="about-img">
-                        <h5>10th Science</h5>
+                        <h5>{{standard}} {{bookname}}</h5>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/11th Physics Part 1.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>11th Physics</h5>
-                    </div>
-                </div> <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/9th Science.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>9th Science</h5>
-                    </div>
-                </div> <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/12th Boilogy.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>12th Biology</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/10th English.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>10th English</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/8th Maths.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>8th Maths</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/10th Hindi.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>10th Hindi</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/9th Marathi.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>9th Marathi</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/9th Science.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>9th Science</h5>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <a href="#"><img src="./image/10th Science.webp"></a>
-                    </div>
-                    <div class="about-img">
-                        <h5>10th Science</h5>
-                    </div>
-                </div>
+                {{/each}}
             </div>
         </div>
     </main>
-    {{>footer}}
+
+    {{> footer}}
 </body>
+
 </html>
