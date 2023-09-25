@@ -24,10 +24,14 @@ signupForm.addEventListener("submit", async (e) => {
     });
 
     if (response.ok) {
-      successMessage.style.display = "block";
       document.getElementById("text").value = "";
       document.getElementById("email").value = "";
       document.getElementById("password").value = "";
+      Swal.fire({
+        icon: "success",
+        width: 400,
+        text: "Sign Up Sucessfully",
+      });
     } else {
       console.error("Error during signup:", response.statusText);
     }
