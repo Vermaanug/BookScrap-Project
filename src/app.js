@@ -174,6 +174,26 @@ app.get('/Browse', async (req, res) => {
   }
 });
 
+// Create a route for the dynamic book page
+app.get('/book/:bookId', async (req, res) => {
+  try {
+    // Fetch the book details based on bookId from the database
+    const bookId = req.params.bookId;
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).send("Book not found");
+    }
+
+    // Render the "Dynamic" page with book details
+    res.render('Dynamic', { book });
+  } catch (error) {
+    console.error('Error fetching book data:', error);
+    res.status(500).json({ message: 'An error occurred while fetching book data' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
