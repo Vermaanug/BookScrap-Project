@@ -93,10 +93,6 @@ header {
     font-weight: 400;
 }
 
-.user-dropdown .dropdown {
-    display: block;
-}
-
 .user-dropdown .dropdown li {
     padding: 10px;
 }
