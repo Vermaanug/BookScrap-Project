@@ -23,7 +23,10 @@ const bookSchema = mongoose.Schema({
     },
     imagePath: { 
         type: String 
-    } 
+    },
+    username : {
+        type : String
+    }
 });
 
 const Book = new  mongoose.model('Book', bookSchema);
