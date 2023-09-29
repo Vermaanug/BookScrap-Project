@@ -132,10 +132,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage : storage });
 
 // Handle POST request to save data to the database
-app.post('/submit-form', upload.single('imagePath'), async (req, res) => {
+app.post('/submit-form', upload.single('imagePath'),  isAuthenticated ,async (req, res) => {
 
   try {
-
       // Create a new book object
       const newBookEntry = new Book({
           bookname : req.body.bookname ,
@@ -144,6 +143,7 @@ app.post('/submit-form', upload.single('imagePath'), async (req, res) => {
           location : req.body.location ,
           pincode : req.body.pincode ,
           imagePath: req.file ? req.file.filename : '',
+          username: req.session.username,
       });
 
       // Save the book data to the database
@@ -186,7 +186,11 @@ app.get('/book/:bookId', async (req, res) => {
     }
 
     // Render the "Dynamic" page with book details
-    res.render('Dynamic', { book });
+    res.render('Dynamic', { 
+    book,
+    isAuthenticated: req.session.isAuthenticated || false,
+    username: req.session.username || '' ,
+  });
   } catch (error) {
     console.error('Error fetching book data:', error);
     res.status(500).json({ message: 'An error occurred while fetching book data' });
