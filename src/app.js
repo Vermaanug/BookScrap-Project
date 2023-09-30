@@ -198,6 +198,25 @@ app.get('/book/:bookId', async (req, res) => {
 });
 
 
+app.get("/Dashboard", isAuthenticated, async (req, res) => {
+  try {
+    // Fetch books uploaded by the currently logged-in user
+    const books = await Book.find({ username: req.session.username });
+
+    // Render the profile page with the user's books
+    res.render("Dashboard", {
+      isAuthenticated: true,
+      username: req.session.username,
+      books: books,
+    });
+  } catch (error) {
+    console.error("Error fetching user's books:", error);
+    res.status(500).json({ message: "An error occurred while fetching user's books" });
+  }
+});
+
+
+
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
