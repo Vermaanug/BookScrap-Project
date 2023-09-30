@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Page </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/Profile.css">
+</head>
+
+<body>
+    {{> navbar}}
+    <div class="Container">
+        <h1>Welcome, <span>{{username}}</span></h1>
+        <div class="box">
+
+            {{#each books}}
+            <div class="card">
+                <div class="image">
+                    <a href="#"><img src="/uploads/{{imagePath}}" alt="{{this.bookname}}"></a>
+                </div>
+                <div class="about-img">
+                    <h5>{{this.standard}}{{this.bookname}}</h5>
+                </div>
+                <div class="option">
+                    <h4><a href="#">Edit</a></h4>
+                    <h4><a href="#">Delete</a></h4>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{> footer}}
+</body>
+
+</html>
