@@ -71,6 +71,8 @@ app.get("/Signup", (req, res) => {
 // Sign Up Api
 app.post("/Signup", async (req, res) => {
   const data = {
+    Firstname: req.body.Firstname,
+    Lastname: req.body.Lastname,
     Username: req.body.username,
     Email: req.body.email,
     Password: req.body.password,
