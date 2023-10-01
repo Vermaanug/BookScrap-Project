@@ -25,7 +25,7 @@ body {
 .Box {
     border-radius: 1rem;
     min-width: 30rem ;
-    min-height: 30rem ;
+    min-height: 38rem ;
     background-color: #fff;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
     position: relative;
