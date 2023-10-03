@@ -242,7 +242,29 @@ app.get('/edit-book/:id', async (req, res) => {
   }
 });
 
+app.post('/update-book', upload.single('imagePath'), isAuthenticated, async (req, res) => {
+  try {
+    const bookId = req.body.bookId; // Get the book ID from the form submission
+    const currentImagePath = req.body.currentImagePath; // Get the current image path
+    const updatedImagePath = req.file ? req.file.filename : currentImagePath;
+    const updatedBookData = {
+      bookname: req.body.bookname,
+      standard: req.body.standard,
+      number: req.body.number,
+      location: req.body.location,
+      pincode: req.body.pincode,
+      imagePath: updatedImagePath,
+    };
 
+    // Use the bookId to update the book data in the database
+    await Book.findByIdAndUpdate(bookId, updatedBookData);
+
+    res.redirect('/Dashboard'); // Redirect back to the dashboard after updating
+  } catch (error) {
+    console.error('Error updating book data:', error);
+    res.status(500).json({ message: 'An error occurred while updating book data' });
+  }
+});
 
 
 app.listen(port, () => {
