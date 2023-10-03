@@ -217,6 +217,31 @@ app.get("/Dashboard", isAuthenticated, async (req, res) => {
   }
 });
 
+app.get('/edit-book/:id', async (req, res) => {
+  try {
+      // Retrieve the book information based on the _id parameter
+      const bookId = req.params.id;
+      
+      // Retrieve book information from query parameters
+      const book = await Book.findById(bookId);
+
+      if (!book) {
+        // Handle the case where the book with the given ID was not found
+        res.status(404).send('Book not found');
+        return;
+      }
+
+      res.render('Update', { 
+          book,
+          isAuthenticated: req.session.isAuthenticated || false,
+          username: req.session.username || '',
+      });
+  } catch (error) {
+      console.error('Error retrieving book data:', error);
+      res.status(500).json({ message: 'An error occurred while retrieving book data' });
+  }
+});
+
 
 
 
