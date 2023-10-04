@@ -266,6 +266,20 @@ app.post('/update-book', upload.single('imagePath'), isAuthenticated, async (req
   }
 });
 
+app.get('/delete-book/:id', isAuthenticated, async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    
+    // Find the book by ID and remove it from the database
+    await Book.findByIdAndRemove(bookId);
+
+    res.redirect('/Dashboard'); // Redirect back to the dashboard after deleting
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    res.status(500).json({ message: 'An error occurred while deleting the book' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
