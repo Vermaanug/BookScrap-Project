@@ -20,7 +20,11 @@ const SignUp = mongoose.Schema({
     Password:{
         type:String,
         require:true
-    }
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    }  
 })
 
 const User = new mongoose.model('User', SignUp);
