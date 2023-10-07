@@ -289,6 +289,42 @@ app.get('/delete-book/:id', isAuthenticated, async (req, res) => {
   }
 });
 
+// Add a new route for the admin page
+app.get('/admin', isAuthenticated, async (req, res) => {
+  if (req.session.isAdmin) {
+    try {
+      // Fetch the total number of users
+      const totalUsers = await User.countDocuments();
+
+      // Fetch the number of books uploaded today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set the time to the beginning of the day
+      const booksUploadedToday = await Book.countDocuments({
+        createdAt: { $gte: today },
+      });
+
+      // Fetch the number of books deleted today
+      const booksDeletedToday = await Book.countDocuments({
+        deletedAt: { $gte: today },
+      });
+
+      // Render the admin dashboard page and pass the data
+      res.render('admin', {
+        totalUsers,
+        booksUploadedToday,
+        booksDeletedToday,
+        isAuthenticated: req.session.isAuthenticated || false,
+        username: req.session.username || '',
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ message: 'An error occurred while fetching data' });
+    }
+  } else {
+    // If the user is not an admin, redirect them to a different page (e.g., index page)
+    res.redirect('/');
+  }
+});
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
