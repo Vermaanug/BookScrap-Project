@@ -98,8 +98,16 @@ app.post("/login", async (req, res) => {
     if (foundResult && foundResult.Password === password) {
       req.session.isAuthenticated = true;
       req.session.username = foundResult.Username;
+      
+      // Set the isAdmin flag in the session based on the user's isAdmin property
+      req.session.isAdmin = foundResult.isAdmin;
 
-      res.redirect("/");
+      // Redirect to the appropriate page based on isAdmin flag
+      if (req.session.isAdmin) {
+        res.redirect("/admin"); // Redirect admin users to the admin page
+      } else {
+        res.redirect("/"); // Redirect normal users to the index page
+      }
     } else {
       res.send("Invalid Username or Password");
     }
@@ -108,6 +116,7 @@ app.post("/login", async (req, res) => {
     res.status(500).send("An error occurred during login");
   }
 });
+
 
 // Logout 
 app.get("/logout", (req, res) => {
