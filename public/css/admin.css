@@ -109,7 +109,7 @@ main{
 }
 
 .admin{
-    border: 1px solid red;
+    /* border: 1px solid red; */
     min-height: 90vh;
     padding: 1rem;
 }
