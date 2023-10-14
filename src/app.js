@@ -77,6 +77,24 @@ app.post("/Signup", async (req, res) => {
     Email: req.body.email,
     Password: req.body.password,
   };
+  
+  const existingUser = await User.findOne({
+    $or: [{ Username: data.Username }, { Email: data.Email }],
+  });
+
+  if (existingUser) {
+    const conflictMessage = [];
+    if (existingUser.Username === data.Username) {
+      conflictMessage.push("Username already exists");
+    }
+    if (existingUser.Email === data.Email) {
+      conflictMessage.push("Email already exists");
+    }
+
+    return res.status(409).json({
+      message: conflictMessage.join(" and "),
+    });
+  }
 
   try {
     const newUser = await User.create(data);
@@ -98,7 +116,7 @@ app.post("/login", async (req, res) => {
     if (foundResult && foundResult.Password === password) {
       req.session.isAuthenticated = true;
       req.session.username = foundResult.Username;
-      
+
       // Set the isAdmin flag in the session based on the user's isAdmin property
       req.session.isAdmin = foundResult.isAdmin;
 
@@ -133,36 +151,36 @@ app.get("/logout", (req, res) => {
 // Storage and FileName Setting
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'public/uploads'); // Destination folder for uploaded images
+    cb(null, 'public/uploads'); // Destination folder for uploaded images
   },
   filename: (req, file, cb) => {
-      cb(null , file.originalname);
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage : storage });
+const upload = multer({ storage: storage });
 
 // Handle POST request to save data to the database
-app.post('/submit-form', upload.single('imagePath'),  isAuthenticated ,async (req, res) => {
+app.post('/submit-form', upload.single('imagePath'), isAuthenticated, async (req, res) => {
 
   try {
-      // Create a new book object
-      const newBookEntry = new Book({
-          bookname : req.body.bookname ,
-          standard : req.body.standard ,
-          number : req.body.number ,
-          location : req.body.location ,
-          pincode : req.body.pincode ,
-          imagePath: req.file ? req.file.filename : '',
-          username: req.session.username,
-      });
+    // Create a new book object
+    const newBookEntry = new Book({
+      bookname: req.body.bookname,
+      standard: req.body.standard,
+      number: req.body.number,
+      location: req.body.location,
+      pincode: req.body.pincode,
+      imagePath: req.file ? req.file.filename : '',
+      username: req.session.username,
+    });
 
-      // Save the book data to the database
-      await newBookEntry.save();
-      res.status(201).json({ message: 'Book entry created successfully' });
+    // Save the book data to the database
+    await newBookEntry.save();
+    res.status(201).json({ message: 'Book entry created successfully' });
   } catch (error) {
-      console.error('Error creating book entry:', error);
-      res.status(500).json({ message: 'An error occurred while creating the book entry' });
+    console.error('Error creating book entry:', error);
+    res.status(500).json({ message: 'An error occurred while creating the book entry' });
   }
 });
 
@@ -170,7 +188,7 @@ app.post('/submit-form', upload.single('imagePath'),  isAuthenticated ,async (re
 app.get('/Browse', async (req, res) => {
   try {
     // Fetch data from the Book collection
-    const books = await Book.find(); 
+    const books = await Book.find();
 
     const data = {
       books,
@@ -178,7 +196,7 @@ app.get('/Browse', async (req, res) => {
       username: req.session.username || '',
     };
 
-    res.render('browse', data); 
+    res.render('browse', data);
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ message: 'An error occurred while fetching data' });
@@ -197,11 +215,11 @@ app.get('/book/:bookId', async (req, res) => {
     }
 
     // Render the "Dynamic" page with book details
-    res.render('Dynamic', { 
-    book,
-    isAuthenticated: req.session.isAuthenticated || false,
-    username: req.session.username || '' ,
-  });
+    res.render('Dynamic', {
+      book,
+      isAuthenticated: req.session.isAuthenticated || false,
+      username: req.session.username || '',
+    });
   } catch (error) {
     console.error('Error fetching book data:', error);
     res.status(500).json({ message: 'An error occurred while fetching book data' });
@@ -228,26 +246,26 @@ app.get("/Dashboard", isAuthenticated, async (req, res) => {
 
 app.get('/edit-book/:id', async (req, res) => {
   try {
-      // Retrieve the book information based on the _id parameter
-      const bookId = req.params.id;
-      
-      // Retrieve book information from query parameters
-      const book = await Book.findById(bookId);
+    // Retrieve the book information based on the _id parameter
+    const bookId = req.params.id;
 
-      if (!book) {
-        // Handle the case where the book with the given ID was not found
-        res.status(404).send('Book not found');
-        return;
-      }
+    // Retrieve book information from query parameters
+    const book = await Book.findById(bookId);
 
-      res.render('Update', { 
-          book,
-          isAuthenticated: req.session.isAuthenticated || false,
-          username: req.session.username || '',
-      });
+    if (!book) {
+      // Handle the case where the book with the given ID was not found
+      res.status(404).send('Book not found');
+      return;
+    }
+
+    res.render('Update', {
+      book,
+      isAuthenticated: req.session.isAuthenticated || false,
+      username: req.session.username || '',
+    });
   } catch (error) {
-      console.error('Error retrieving book data:', error);
-      res.status(500).json({ message: 'An error occurred while retrieving book data' });
+    console.error('Error retrieving book data:', error);
+    res.status(500).json({ message: 'An error occurred while retrieving book data' });
   }
 });
 
@@ -278,7 +296,7 @@ app.post('/update-book', upload.single('imagePath'), isAuthenticated, async (req
 app.get('/delete-book/:id', isAuthenticated, async (req, res) => {
   try {
     const bookId = req.params.id;
-    
+
     // Find the book by ID and remove it from the database
     await Book.findByIdAndRemove(bookId);
 
@@ -296,18 +314,18 @@ app.get('/admin', isAuthenticated, async (req, res) => {
       // Fetch the total number of users
       const totalUsers = await User.countDocuments();
 
-      // Fetch the number of books uploaded today
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set the time to the beginning of the day
       const booksUploadedToday = await Book.countDocuments({
-        createdAt: { $gte: today },
+        createdAt: {
+          $gte: new Date().setHours(0, 0, 0)
+        }
       });
-
-      // Fetch the number of books deleted today
       const booksDeletedToday = await Book.countDocuments({
-        deletedAt: { $gte: today },
+        deletedAt: {
+          $gte: new Date().setHours(0, 0, 0)
+        }
       });
-
+      console.log(booksUploadedToday)
+      console.log(booksDeletedToday)
       // Render the admin dashboard page and pass the data
       res.render('admin', {
         totalUsers,
@@ -325,6 +343,7 @@ app.get('/admin', isAuthenticated, async (req, res) => {
     res.redirect('/');
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
