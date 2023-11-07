@@ -52,3 +52,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const Phone = document.getElementById('number');
+const Pincode = document.getElementById('pincode');
+
+function restrictToNumeric(inputElement) {
+  inputElement.addEventListener('input', function (e) {
+      var inputValue = e.target.value;
+      // Remove any non-numeric characters
+      e.target.value = inputValue.replace(/\D/g, '');
+  });
+}
+
+restrictToNumeric(Phone);
+restrictToNumeric(Pincode);
