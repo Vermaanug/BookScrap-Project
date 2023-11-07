@@ -26,6 +26,13 @@ const bookSchema = mongoose.Schema({
     },
     username : {
         type : String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    deletedAt: {
+        type: Date
     }
 });
 
